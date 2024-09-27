@@ -9,7 +9,7 @@
 
 #pragma once
 #include <Arduino.h>
-#include <SignalReceiver.h>
+#include <Actor.h>
 #include <PeriodicTask.h>
 #include <SensorManager.h>
 #include <ESP32Time.h>
@@ -17,7 +17,7 @@
 #include <ArduinoJson.h>
 
 /// @brief Logs sensor data locally
-class LocalDataLogger : public SignalReceiver, public PeriodicTask {
+class LocalDataLogger : public Actor, public PeriodicTask {
 	private:
 		/// @brief Holds data logger configuration
 		struct {

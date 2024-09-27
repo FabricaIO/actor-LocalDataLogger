@@ -8,7 +8,7 @@ LocalDataLogger::LocalDataLogger(ESP32Time* RTC) {
 
 bool LocalDataLogger::begin() {
 	// Set description
-	Description.signalQuantity = 0;
+	Description.actionQuantity = 0;
 	Description.type = "datalogger";
 	Description.name = "Local Data Logger";
 	Description.id = 1;
