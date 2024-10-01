@@ -16,12 +16,12 @@ bool LocalDataLogger::begin() {
 	if (!Storage::fileExists(config_path)) {
 		// Set defaults
 		current_config = { .name = "LocalData.csv", .enabled = false };
-		TaskDescription = { .taskName = "LocalDataLogger", .taskPeriod = 10000 };
+		task_config = { .taskName = "LocalDataLogger", .taskPeriod = 10000 };
 		path = "/data/" + current_config.name;
 		result = saveConfig(config_path, getConfig());
 	} else {
 		// Load settings
-		result = setConfig(Storage::readFile(config_path));
+		result = setConfig(Storage::readFile(config_path), false);
 	}
 	return result;
 }
@@ -64,9 +64,10 @@ bool LocalDataLogger::enableLogging(bool enable) {
 }
 
 /// @brief Sets the configuration for this device
-/// @param config The JSON config to use
+/// @param config A JSON string of the configuration settings
+/// @param save If the configuration should be saved to a file
 /// @return True on success
-bool LocalDataLogger::setConfig(String config) {
+bool LocalDataLogger::setConfig(String config, bool save) {
 	// Allocate the JSON document
   	JsonDocument doc;
 	// Deserialize file contents
@@ -80,18 +81,21 @@ bool LocalDataLogger::setConfig(String config) {
 	// Assign loaded values
 	current_config.name = doc["name"].as<String>();
 	current_config.enabled = doc["enabled"].as<bool>();
-	TaskDescription.taskPeriod = doc["samplingPeriod"].as<long>();
-	TaskDescription.taskName = doc["taskName"].as<std::string>();
+	task_config.taskPeriod = doc["samplingPeriod"].as<long>();
+	task_config.taskName = doc["taskName"].as<std::string>();
 	path = "/data/" + current_config.name;
 	enableLogging(current_config.enabled);
-	return saveConfig(config_path, getConfig());
+	if (save) {
+		return saveConfig(config_path, getConfig());
+	}
+	return true;
 }
 
 /// @brief Logs current data from all sensors
 /// @param elapsed The time in ms since this task was last called
 void LocalDataLogger::runTask(long elapsed) {
 	totalElapsed += elapsed;
-	if (current_config.enabled && totalElapsed >= TaskDescription.taskPeriod) {
+	if (current_config.enabled && totalElapsed >= task_config.taskPeriod) {
 		totalElapsed = 0;
 		if (!Storage::fileExists(path)) {
 			if (!Storage::writeFile(path, header)) {
@@ -130,8 +134,8 @@ String LocalDataLogger::getConfig() {
 	// Assign current values
 	doc["name"] = current_config.name;
 	doc["enabled"] = current_config.enabled;
-	doc["samplingPeriod"] = TaskDescription.taskPeriod;
-	doc["taskName"] = TaskDescription.taskName;
+	doc["samplingPeriod"] = task_config.taskPeriod;
+	doc["taskName"] = task_config.taskName;
 
 	// Create string to hold output
 	String output;

@@ -18,7 +18,7 @@
 
 /// @brief Logs sensor data locally
 class LocalDataLogger : public Actor, public PeriodicTask {
-	private:
+	protected:
 		/// @brief Holds data logger configuration
 		struct {
 			/// @brief The file name and used to log data in data directory
@@ -46,6 +46,6 @@ class LocalDataLogger : public Actor, public PeriodicTask {
 		LocalDataLogger(ESP32Time* RTC);
 		bool begin();
 		String getConfig();
-		bool setConfig(String config);
+		bool setConfig(String config, bool save);
 		void runTask(long elapsed);	
 };
