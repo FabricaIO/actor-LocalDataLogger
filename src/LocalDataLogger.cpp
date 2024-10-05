@@ -42,8 +42,8 @@ bool LocalDataLogger::enableLogging(bool enable) {
 			DeserializationError error = deserializeJson(doc, SensorManager::getSensorInfo());			
 			// Test if parsing succeeds.
 			if (error) {
-				Serial.print(F("Deserialization failed: "));
-				Serial.println(error.f_str());
+				Logger.print(F("Deserialization failed: "));
+				Logger.println(error.f_str());
 				return false;
 			}
 			for (const auto& s : doc["sensors"].as<JsonArray>()) {
@@ -74,8 +74,8 @@ bool LocalDataLogger::setConfig(String config, bool save) {
 	DeserializationError error = deserializeJson(doc, config);
 	// Test if parsing succeeds.
 	if (error) {
-		Serial.print(F("Deserialization failed: "));
-		Serial.println(error.f_str());
+		Logger.print(F("Deserialization failed: "));
+		Logger.println(error.f_str());
 		return false;
 	}
 	// Assign loaded values
@@ -112,8 +112,8 @@ void LocalDataLogger::runTask(long elapsed) {
 		DeserializationError error = deserializeJson(doc, SensorManager::getLastMeasurement());
 		// Test if parsing succeeds.
 		if (error) {
-			Serial.print(F("Deserialization failed: "));
-			Serial.println(error.f_str());
+			Logger.print(F("Deserialization failed: "));
+			Logger.println(error.f_str());
 			return;
 		}
 		for (const auto& m : doc["measurements"].as<JsonArray>()) {
