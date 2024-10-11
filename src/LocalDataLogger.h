@@ -37,8 +37,8 @@ class LocalDataLogger : public Actor, public PeriodicTask {
 		/// @brief Path to configuration file
 		const String config_path = "/settings/sig/LocalLogger.json";
 
-		/// @brief Pointer to the clock object in use
-		ESP32Time* rtc;
+		/// @brief RTC object for getting/setting time
+		ESP32Time rtc;
 
 		bool enableLogging(bool enable);
 
