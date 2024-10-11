@@ -1,11 +1,5 @@
 #include "LocalDataLogger.h"
 
-/// @brief Creates a local data logger
-/// @param RTC Pointer to RTC to use for time
-LocalDataLogger::LocalDataLogger(ESP32Time* RTC) {
-
-}
-
 bool LocalDataLogger::begin() {
 	// Set description
 	Description.actionQuantity = 0;
@@ -100,7 +94,7 @@ void LocalDataLogger::runTask(long elapsed) {
 				return;
 			}
 		}
-		String data = rtc.getTime("%m-%d-%Y %T");
+		String data = TimeInterface::getFormattedTime("%m-%d-%Y %T");
 		// Allocate the JSON document
 		JsonDocument doc;
 		// Deserialize sensor info

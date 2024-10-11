@@ -12,7 +12,7 @@
 #include <Actor.h>
 #include <PeriodicTask.h>
 #include <SensorManager.h>
-#include <ESP32Time.h>
+#include <TimeInterface.h>
 #include <Storage.h>
 #include <ArduinoJson.h>
 
@@ -37,13 +37,9 @@ class LocalDataLogger : public Actor, public PeriodicTask {
 		/// @brief Path to configuration file
 		const String config_path = "/settings/sig/LocalLogger.json";
 
-		/// @brief RTC object for getting/setting time
-		ESP32Time rtc;
-
 		bool enableLogging(bool enable);
 
 	public:
-		LocalDataLogger(ESP32Time* RTC);
 		bool begin();
 		String getConfig();
 		bool setConfig(String config, bool save);
