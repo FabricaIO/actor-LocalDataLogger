@@ -102,9 +102,6 @@ void LocalDataLogger::runTask(long elapsed) {
 				return;
 			}
 		}
-		if (!SensorManager::takeMeasurement()) {
-			return;
-		}
 		String data = rtc->getTime("%m-%d-%Y %T");
 		// Allocate the JSON document
 		JsonDocument doc;
