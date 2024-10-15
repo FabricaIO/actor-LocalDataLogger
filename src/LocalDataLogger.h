@@ -35,7 +35,7 @@ class LocalDataLogger : public Actor, public PeriodicTask {
 		String path;
 
 		/// @brief Path to configuration file
-		const String config_path = "/settings/sig/LocalLogger.json";
+		const String config_path = "/settings/act/LocalLogger.json";
 
 		bool enableLogging(bool enable);
 
