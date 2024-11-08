@@ -25,36 +25,10 @@ bool LocalDataLogger::begin() {
 /// @return True on success
 bool LocalDataLogger::enableLogging(bool enable) {
 	current_config.enabled = enable;
-	if (enable) {
-		// Check for existence of data file
-		if (!Storage::fileExists(path)) {
-			// Create file header
-			header = "time";
-			// Allocate the JSON document
-			JsonDocument doc;
-			// Deserialize sensor info
-			DeserializationError error = deserializeJson(doc, SensorManager::getSensorInfo());			
-			// Test if parsing succeeds.
-			if (error) {
-				Logger.print(F("Deserialization failed: "));
-				Logger.println(error.f_str());
-				return false;
-			}
-			for (const auto& s : doc["sensors"].as<JsonArray>()) {
-				for (const auto& p : s["parameters"].as<JsonArray>()) {
-					header += "," + p["name"].as<String>() + " (" + p["unit"].as<String>() + ")";
-				}
-			}
-			header += '\n';
-			if (!Storage::fileExists("/data")) {
-				Storage::createDir("/data");
-			}
-			if (!Storage::writeFile(path, header)) {
-				return false;
-			}
-		}
+	if (createDataFile()) {
+		return enableTask(enable);
 	}
-	return enableTask(enable);
+	return false;
 }
 
 /// @brief Sets the configuration for this device
@@ -89,10 +63,8 @@ bool LocalDataLogger::setConfig(String config, bool save) {
 /// @param elapsed The time in ms since this task was last called
 void LocalDataLogger::runTask(long elapsed) {
 	if (taskPeriodTriggered(elapsed)) {
-		if (!Storage::fileExists(path)) {
-			if (!Storage::writeFile(path, header)) {
-				return;
-			}
+		if (!createDataFile()) {
+			return;
 		}
 		String data = TimeInterface::getFormattedTime("%m-%d-%Y %T");
 		// Allocate the JSON document
@@ -113,6 +85,38 @@ void LocalDataLogger::runTask(long elapsed) {
 			Storage::appendToFile(path, data);
 		}
 	}
+}
+
+/// @brief Creates the data file with header if needed
+/// @return True on success or if file exists
+bool LocalDataLogger::createDataFile() {
+	if (!Storage::fileExists(path)) {
+		// Create file header
+		String header = "time";
+		// Allocate the JSON document
+		JsonDocument doc;
+		// Deserialize sensor info
+		DeserializationError error = deserializeJson(doc, SensorManager::getSensorInfo());			
+		// Test if parsing succeeds.
+		if (error) {
+			Logger.print(F("Deserialization failed: "));
+			Logger.println(error.f_str());
+			return false;
+		}
+		for (const auto& s : doc["sensors"].as<JsonArray>()) {
+			for (const auto& p : s["parameters"].as<JsonArray>()) {
+				header += "," + p["name"].as<String>() + " (" + p["unit"].as<String>() + ")";
+			}
+		}
+		header += '\n';
+		if (!Storage::fileExists("/data")) {
+			Storage::createDir("/data");
+		}
+		if (!Storage::writeFile(path, header)) {
+			return false;
+		}
+	}
+	return true;
 }
 
 /// @brief Gets the current config

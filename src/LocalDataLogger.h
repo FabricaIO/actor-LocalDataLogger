@@ -28,9 +28,6 @@ class LocalDataLogger : public Actor, public PeriodicTask {
 			bool enabled;
 		} current_config;
 
-		/// @brief CSV column header
-		String header;
-
 		/// @brief Full path to data file
 		String path;
 
@@ -38,6 +35,8 @@ class LocalDataLogger : public Actor, public PeriodicTask {
 		const String config_path = "/settings/act/LocalLogger.json";
 
 		bool enableLogging(bool enable);
+
+		bool createDataFile();
 
 	public:
 		bool begin();
