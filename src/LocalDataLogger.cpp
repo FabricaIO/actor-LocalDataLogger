@@ -25,10 +25,7 @@ bool LocalDataLogger::begin() {
 /// @return True on success
 bool LocalDataLogger::enableLogging(bool enable) {
 	current_config.enabled = enable;
-	if (createDataFile()) {
-		return enableTask(enable);
-	}
-	return false;
+	return enableTask(enable);
 }
 
 /// @brief Sets the configuration for this device
