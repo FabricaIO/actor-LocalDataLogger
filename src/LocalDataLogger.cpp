@@ -7,7 +7,7 @@ bool LocalDataLogger::begin() {
 	Description.name = "Local Data Logger";
 	Description.id = 1;
 	bool result = false;
-	if (!Storage::fileExists(config_path)) {
+	if (!checkConfig(config_path)) {
 		// Set defaults
 		current_config = { .name = "LocalData.csv", .enabled = false };
 		task_config = { .taskName = "LocalDataLogger", .taskPeriod = 10000 };
