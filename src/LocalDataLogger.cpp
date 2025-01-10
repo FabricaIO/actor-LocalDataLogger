@@ -5,7 +5,6 @@ bool LocalDataLogger::begin() {
 	Description.actionQuantity = 0;
 	Description.type = "datalogger";
 	Description.name = "Local Data Logger";
-	Description.id = 1;
 	bool result = false;
 	if (!checkConfig(config_path)) {
 		// Set defaults
