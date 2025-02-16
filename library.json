@@ -1,5 +1,5 @@
 {
-	"name": "Fabrica-IO Actor Local Data Logger",
+	"name": "actor-LocalDataLogger",
 	"version": "0.5.0",
 	"description": "Logs all sensor data to local CSV",
 	"keywords": "Fabrica-IO, actor, data, logger",
