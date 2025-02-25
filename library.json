@@ -23,7 +23,7 @@
 	"frameworks": "arduino",
 	"platforms": "*",
 	"fabrica-io" : {
-		"name": "",
+		"name": "DataLoggerLocal",
 		"type": 1,
 		"category": "DataLogger",
 		"libname": "LocalDataLogger",
