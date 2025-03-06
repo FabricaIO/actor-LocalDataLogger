@@ -2,9 +2,10 @@
 
 bool LocalDataLogger::begin() {
 	// Set description
-	Description.actionQuantity = 0;
+	Description.actionQuantity = 1;
 	Description.type = "datalogger";
 	Description.name = "Local Data Logger";
+	Description.actions = {{"Log data", 0}};
 	bool result = false;
 	if (!checkConfig(config_path)) {
 		// Set defaults
@@ -25,6 +26,17 @@ bool LocalDataLogger::begin() {
 bool LocalDataLogger::enableLogging(bool enable) {
 	current_config.enabled = enable;
 	return enableTask(enable);
+}
+
+/// @brief Receives an action
+/// @param action The action to process (only option is 0 for set output)
+/// @param payload A 0 or 1 to set the pin low or high
+/// @return JSON response with OK
+std::tuple<bool, String> LocalDataLogger::receiveAction(int action, String payload) {
+	if (action == 0) {
+		runTask(LONG_MAX);
+	}	
+	return { true, R"({"Response": "OK"})" };
 }
 
 /// @brief Sets the configuration for this device
