@@ -41,5 +41,5 @@ class LocalDataLogger : public Actor, public PeriodicTask {
 		bool begin();
 		String getConfig();
 		bool setConfig(String config, bool save);
-		void runTask(long elapsed);	
+		void runTask(ulong elapsed);	
 };

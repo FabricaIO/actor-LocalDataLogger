@@ -69,7 +69,7 @@ bool LocalDataLogger::setConfig(String config, bool save) {
 
 /// @brief Logs current data from all sensors
 /// @param elapsed The time in ms since this task was last called
-void LocalDataLogger::runTask(long elapsed) {
+void LocalDataLogger::runTask(ulong elapsed) {
 	if (taskPeriodTriggered(elapsed)) {
 		if (!createDataFile()) {
 			return;
