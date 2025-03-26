@@ -9,9 +9,9 @@ bool LocalDataLogger::begin() {
 	bool result = false;
 	if (!checkConfig(config_path)) {
 		// Set defaults
-		current_config = { .name = "LocalData.csv", .enabled = false };
+		current_config = { .fileName = "LocalData.csv", .enabled = false };
 		task_config = { .taskName = "LocalDataLogger", .taskPeriod = 10000 };
-		path = "/data/" + current_config.name;
+		path = "/data/" + current_config.fileName;
 		result = saveConfig(config_path, getConfig());
 	} else {
 		// Load settings
@@ -55,11 +55,12 @@ bool LocalDataLogger::setConfig(String config, bool save) {
 		return false;
 	}
 	// Assign loaded values
-	current_config.name = doc["name"].as<String>();
+	Description.name = doc["Name"].as<String>();
+	current_config.fileName = doc["fileName"].as<String>();
 	current_config.enabled = doc["enabled"].as<bool>();
 	task_config.taskPeriod = doc["samplingPeriod"].as<long>();
 	task_config.taskName = doc["taskName"].as<std::string>();
-	path = "/data/" + current_config.name;
+	path = "/data/" + current_config.fileName;
 	enableLogging(current_config.enabled);
 	if (save) {
 		return saveConfig(config_path, getConfig());
@@ -133,7 +134,8 @@ String LocalDataLogger::getConfig() {
 	// Allocate the JSON document
 	JsonDocument doc;
 	// Assign current values
-	doc["name"] = current_config.name;
+	doc["Name"] = Description.name;
+	doc["fileName"] = current_config.fileName;
 	doc["enabled"] = current_config.enabled;
 	doc["samplingPeriod"] = task_config.taskPeriod;
 	doc["taskName"] = task_config.taskName;

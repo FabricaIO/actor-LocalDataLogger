@@ -22,7 +22,7 @@ class LocalDataLogger : public Actor, public PeriodicTask {
 		/// @brief Holds data logger configuration
 		struct {
 			/// @brief The file name and used to log data in data directory
-			String name;
+			String fileName;
 
 			/// @brief Enable data logging
 			bool enabled;
