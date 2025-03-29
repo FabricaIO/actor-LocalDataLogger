@@ -30,12 +30,16 @@
 		"includes": ["LocalDataLogger"],
 		"description": "Logs all sensor data to local CSV",
 		"constructor": [
-			{
-				"name": "Configfile",
-				"type": "String",
-				"description": "The file name to store settings in",
-				"default": "LocalLogger.json"
-			}
+			
+			[
+				{
+					"name": "Configfile",
+					"type": "String",
+					"description": "The file name to store settings in",
+					"default": "LocalLogger.json"
+				}
+			]
+			
 		]
 	}
   }
