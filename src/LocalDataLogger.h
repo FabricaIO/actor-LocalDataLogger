@@ -32,12 +32,13 @@ class LocalDataLogger : public Actor, public PeriodicTask {
 		String path;
 
 		/// @brief Path to configuration file
-		const String config_path = "/settings/act/LocalLogger.json";
+		String config_path;
 		bool enableLogging(bool enable);
 		bool createDataFile();
 		std::tuple<bool, String> receiveAction(int action, String payload);
 
 	public:
+		LocalDataLogger(String Name, String configFile = "LocalLogger.json");
 		bool begin();
 		String getConfig();
 		bool setConfig(String config, bool save);

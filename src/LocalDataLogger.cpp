@@ -1,10 +1,16 @@
 #include "LocalDataLogger.h"
 
+/// @brief 
+/// @param Name The device name 
+/// @param configFile The name of the config file to use
+LocalDataLogger::LocalDataLogger(String Name, String configFile) : Actor(Name) {
+	config_path = "/settings/act/" + configFile;
+}
+
 bool LocalDataLogger::begin() {
 	// Set description
 	Description.actionQuantity = 1;
 	Description.type = "datalogger";
-	Description.name = "Local Data Logger";
 	Description.actions = {{"Log data", 0}};
 	bool result = false;
 	if (!checkConfig(config_path)) {
