@@ -42,7 +42,7 @@ std::tuple<bool, String> LocalDataLogger::receiveAction(int action, String paylo
 	if (action == 0) {
 		runTask(LONG_MAX);
 	}	
-	return { true, R"({"Response": "OK"})" };
+	return { true, R"({"success": true})" };
 }
 
 /// @brief Sets the configuration for this device
