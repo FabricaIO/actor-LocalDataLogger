@@ -33,7 +33,6 @@ class LocalDataLogger : public Actor, public PeriodicTask {
 
 		/// @brief Path to configuration file
 		String config_path;
-		bool enableLogging(bool enable);
 		bool createDataFile();
 		std::tuple<bool, String> receiveAction(int action, String payload);
 

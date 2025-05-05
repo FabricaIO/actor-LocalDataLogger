@@ -26,18 +26,10 @@ bool LocalDataLogger::begin() {
 	return result;
 }
 
-/// @brief Enables the local data logger
-/// @param enable True to enable, false to disable 
-/// @return True on success
-bool LocalDataLogger::enableLogging(bool enable) {
-	current_config.enabled = enable;
-	return enableTask(enable);
-}
-
 /// @brief Receives an action
-/// @param action The action to process (only option is 0 for set output)
-/// @param payload A 0 or 1 to set the pin low or high
-/// @return JSON response with OK
+/// @param action The action to process (only option is 0 for log data)
+/// @param payload Not used
+/// @return JSON response with success boolean
 std::tuple<bool, String> LocalDataLogger::receiveAction(int action, String payload) {
 	if (action == 0) {
 		runTask(LONG_MAX);
@@ -67,7 +59,9 @@ bool LocalDataLogger::setConfig(String config, bool save) {
 	task_config.taskPeriod = doc["samplingPeriod"].as<long>();
 	task_config.taskName = doc["taskName"].as<std::string>();
 	path = "/data/" + current_config.fileName;
-	enableLogging(current_config.enabled);
+	if (!enableTask(current_config.enabled)) {
+		return false;
+	}
 	if (save) {
 		return saveConfig(config_path, getConfig());
 	}
