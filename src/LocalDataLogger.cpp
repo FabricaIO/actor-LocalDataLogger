@@ -16,7 +16,8 @@ bool LocalDataLogger::begin() {
 	if (!checkConfig(config_path)) {
 		// Set defaults
 		current_config = { .fileName = "LocalData.csv", .enabled = false };
-		task_config = { .taskName = "LocalDataLogger", .taskPeriod = 10000 };
+		task_config.set_taskName(Description.name.c_str());
+		task_config.taskPeriod = 10000;
 		path = "/data/" + current_config.fileName;
 		result = saveConfig(config_path, getConfig());
 	} else {
@@ -57,7 +58,7 @@ bool LocalDataLogger::setConfig(String config, bool save) {
 	current_config.fileName = doc["fileName"].as<String>();
 	current_config.enabled = doc["enabled"].as<bool>();
 	task_config.taskPeriod = doc["samplingPeriod"].as<long>();
-	task_config.taskName = doc["taskName"].as<std::string>();
+	task_config.set_taskName(Description.name.c_str());
 	path = "/data/" + current_config.fileName;
 	if (!enableTask(current_config.enabled)) {
 		return false;
@@ -138,7 +139,6 @@ String LocalDataLogger::getConfig() {
 	doc["fileName"] = current_config.fileName;
 	doc["enabled"] = current_config.enabled;
 	doc["samplingPeriod"] = task_config.taskPeriod;
-	doc["taskName"] = task_config.taskName;
 
 	// Create string to hold output
 	String output;
