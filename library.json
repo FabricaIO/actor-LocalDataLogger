@@ -22,7 +22,7 @@
 	"homepage": "https://github.com/FabricaIO",
 	"frameworks": "arduino",
 	"platforms": "*",
-	"fabrica-io" : {
+	"fabricaio" : {
 		"name": "DataLoggerLocal",
 		"type": 1,
 		"category": "DataLogger",
