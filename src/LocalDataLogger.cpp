@@ -9,7 +9,6 @@ LocalDataLogger::LocalDataLogger(String Name, String configFile) : Actor(Name) {
 
 bool LocalDataLogger::begin() {
 	// Set description
-	Description.actionQuantity = 1;
 	Description.type = "datalogger";
 	Description.actions = {{"Log data", 0}};
 	bool result = false;
