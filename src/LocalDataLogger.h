@@ -22,10 +22,13 @@ class LocalDataLogger : public Actor, public PeriodicTask {
 		/// @brief Holds data logger configuration
 		struct {
 			/// @brief The file name and used to log data in data directory
-			String fileName;
+			String fileName = "LocalData.csv";
 
 			/// @brief Enable data logging
-			bool enabled;
+			bool enabled = false;
+
+			/// @brief Date format to use: https://cplusplus.com/reference/ctime/strftime/
+			String dateFormat = "%Y-%m-%d %T";
 		} current_config;
 
 		/// @brief Full path to data file
