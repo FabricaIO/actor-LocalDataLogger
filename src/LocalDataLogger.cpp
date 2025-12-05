@@ -106,7 +106,7 @@ String LocalDataLogger::getConfig() {
 	doc["fileName"] = current_config.fileName;
 	doc["enabled"] = current_config.enabled;
 	doc["samplingPeriod"] = task_config.taskPeriod;
-	doc["dateForamt"] = current_config.dateFormat;
+	doc["dateFormat"] = current_config.dateFormat;
 
 	// Create string to hold output
 	String output;
