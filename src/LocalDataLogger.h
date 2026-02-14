@@ -28,7 +28,7 @@ class LocalDataLogger : public Actor, public PeriodicTask {
 			bool enabled = false;
 
 			/// @brief Date format to use: https://cplusplus.com/reference/ctime/strftime/
-			String dateFormat = "%Y-%m-%d %T";
+			String dateFormat = "%Y-%m-%d %H:%M:%S";
 		} current_config;
 
 		/// @brief Full path to data file
