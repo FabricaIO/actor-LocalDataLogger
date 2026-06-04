@@ -37,7 +37,7 @@ class LocalDataLogger : public Actor, public PeriodicTask {
 		/// @brief Path to configuration file
 		String config_path;
 		bool createDataFile();
-		std::tuple<bool, String> receiveAction(int action, String payload);
+		std::pair<bool, String> receiveAction(const int action, const String& payload = "");
 
 	public:
 		LocalDataLogger(String Name, String configFile = "LocalLogger.json");

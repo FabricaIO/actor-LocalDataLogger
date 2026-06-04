@@ -29,7 +29,7 @@ bool LocalDataLogger::begin() {
 /// @param action The action to process (only option is 0 for log data)
 /// @param payload Not used
 /// @return JSON response with success boolean
-std::tuple<bool, String> LocalDataLogger::receiveAction(int action, String payload) {
+std::pair<bool, String> LocalDataLogger::receiveAction(const int action, const String& payload) {
 	if (action == 0) {
 		runTask(LONG_MAX);
 	}	
